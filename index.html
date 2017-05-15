@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="StyleSheet" href="css/style.css" type="text/css" />
+</head>
+<div class="container main">
+	<body>
+    <div class="row">
+        <div class="col-sm-12 topbar">
+                <label class="hostname" id="hostname"></label>
+                 |
+                <label class="ip" id="ip"></label>
+                 | &emsp;
+                <a id="gallery" type=button class="btn btn-primary" href="gallery.php">Photo Gallery</a>
+                <label class="clock" id="clock"></label>
+        </div>
+    </div>
+	<div class="row">
+		<div id="viewport" class="col-xs-12 col-md-8 viewport"></div>
+		<div class="col-xs-12 col-md-4 camoptions">
+			<form name="mainform">
+			<dl class="dl-horizontal">
+			<!-- <label>Stream Mode: </label>
+			<div class="onoffswitch">
+			    <input type="checkbox" name="streamOn" class="onoffswitch-checkbox" id="streamOn" onchange="streamMode();">
+			    <label class="onoffswitch-label" for="streamOn">
+			        <span class="onoffswitch-inner"></span>
+			        <span class="onoffswitch-switch"></span>
+			    </label>
+			</div> -->
+			<dt><label>Timelapse Interval</label></dt>
+			<dd><select id="interval" name="interval" onchange="checkSelected();">
+				<option selected>0</option>
+				<option>2 sec</option>
+				<option>5 sec</option>
+				<option>10 sec</option>
+				<option>30 sec</option>
+				<option>1 min</option>
+				<option>5 min</option>
+				<option>10 min</option>
+				<option>15 min</option>
+				<option>30 min</option>
+				<option>1 hour</option>
+				<option>6 hour</option>
+				<option>12 hour</option>
+				<option>24 hour</option>
+			</select></dd>
+			<dt><label>Timelapse Duration</label></dt>
+			<dd><select id="duration" name="duration">
+				<option>1 min</option>
+				<option>5 min</option>
+				<option>10 min</option>
+				<option>30 min</option>
+				<option selected>1 hour</option>
+				<option>6 hours</option>
+				<option>12 hours</option>
+				<option>24 hours</option>
+				<option>5 days</option>
+			</select></dd>
+			<dt><label>Horizontal Flip</label></dt>
+			<dd><div class="onoffswitch">
+			    <input type="checkbox" name="horizontalFlip" class="onoffswitch-checkbox" id="horizontalFlip"/>
+			    <label class="onoffswitch-label" for="horizontalFlip">
+			        <span class="onoffswitch-inner"></span>
+			        <span class="onoffswitch-switch"></span>
+			    </label>
+			</div></dd>
+			<dt><label>Vertical Flip</label></dt>
+			<dd><div class="onoffswitch">
+			    <input type="checkbox" name="vertFlip" class="onoffswitch-checkbox" id="vertFlip"/>
+			    <label class="onoffswitch-label" for="vertFlip">
+			        <span class="onoffswitch-inner"></span>
+			        <span class="onoffswitch-switch"></span>
+			    </label>
+			</div>
+			</dd>
+			<dt><label>Resolution</label></dt>
+			<dd><select id="resolution" name="resolution">
+				<option selected>3280x2464</option>
+				<option>1920x1080</option>
+				<option>1280x720</option>
+				<option>1024x768</option>
+				<option>640x480</option>
+				<option>320x240</option>
+			</select></dd>
+			<dt><label>White Balance</label></dt>
+			<dd><select id="whitebalance" name="whitebalance">
+				<option selected>auto</option>
+				<option>off</option>
+				<option>sunlight</option>
+				<option>cloudy</option>
+				<option>shade</option>
+				<option>tungsten</option>
+				<option>fluorescent</option>
+				<option>incandescent</option>
+				<option>flash</option>
+				<option>horizon</option>
+			</select></dd>
+			<dt><label>Exposure Mode</label></dt>
+			<dd><select id="exposure" name="exposure">
+				<option selected>auto</option>
+				<option>off</option>
+				<option>night</option>
+				<option>nightpreview</option>
+				<option>backlight</option>
+				<option>spotlight</option>
+				<option>sports</option>
+				<option>snow</option>
+				<option>beach</option>
+				<option>verylong</option>
+				<option>fixedfps</option>
+				<option>antishake</option>
+				<option>fireworks</option>
+			</select></dd>
+			<dt><label>Metering</label></dt>
+			<dd><select id="metering" name="metering">
+				<option selected>average</option>
+				<option>spot</option>
+				<option>backlit</option>
+				<option>matrix</option>
+			</select></dd>
+			<dt><label>D.R.C.</label></dt>
+			<dd><select id="drc" name="drc">
+				<option selected>off</option>
+				<option>low</option>
+				<option>medium</option>
+				<option>high</option>
+			</select></dd>
+			<dt><label>Effects</label></dt>
+			<dd><select id="effects" name="effects">
+				<option selected>none</option>
+				<option>negative</option>
+				<option>solarize</option>
+				<option>sketch</option>
+				<option>denoise</option>
+				<option>emboss</option>
+				<option>oilpaint</option>
+				<option>hatch</option>
+				<option>gpen</option>
+				<option>pastel</option>
+				<option>watercolor</option>
+				<option>film</option>
+				<option>blur</option>
+				<option>saturation</option>
+				<option>colorswap</option>
+				<option>washedout</option>
+				<option>posterise</option>
+				<option>colorpoint</option>
+				<option>colorbalance</option>
+				<option>cartoon</option>
+				<option>deinterlace1</option>
+				<option>deinterlace2</option>
+			</select></dd>
+            <dt class="dropdown">
+            <a data-toggle="collapse" data-target="#advPanel" href="#collapse" class="dropdown-toggle">
+            More Options</dt><dd><b class="caret"></b></a>
+            </dd>
+			<div id="advPanel" class="panel-collapse collapse">
+				<br>
+				<dt>
+				<label>Sharpness</label>
+				<input class="rangetext" type="text" name="sharpnessOutput" id="sharpnessOutputId" value="0" maxlength="4" size="4" onkeypress="return isNumberKey(event);" onblur="limitInput(sharpnessOutputId);sharpness.value = sharpnessOutputId.value"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="sharpness" id="sharpness" value="0" min="-100" max="100" oninput="sharpnessOutputId.value = sharpness.value" />	   
+				</dd>
+				<dt>
+				<label>Contrast</label>
+			    <input class="rangetext" type="text" name="contrastOutput" id="contrastOutputId" value="0" maxlength="4" size="4" onkeypress="return isNumberKey(event);"
+			     onblur="limitInput(contrastOutputId);contrast.value = contrastOutputId.value"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="contrast" id="contrast" value="0" min="-100" max="100" oninput="contrastOutputId.value = contrast.value" />
+				</dd>
+				<dt>
+				<label>Brightness</label>
+				<input class="rangetext" type="text" name="brightnessOutput" id="brightnessOutputId" value="50" maxlength="3" size="4" onblur="limitToPositive(brightnessOutputId);brightness.value = brightnessOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="brightness" id="brightness" value="50" min="0" max="100" oninput="brightnessOutputId.value = brightness.value" />
+				</dd>
+				<dt>
+				<label>Saturation</label>
+		        <input class="rangetext" type="text" name="saturationOutput" id="saturationOutputId" value="0" maxlength="4" size="4" onkeypress="return isNumberKey(event);" onblur="limitInput(saturationOutputId);saturation.value = saturationOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="saturation" id="saturation" value="0" min="-100" max="100" oninput="saturationOutputId.value = saturation.value" />
+				</dd>
+				<dt>
+				<label>ISO</label>
+			    <input class="rangetext" type="text" name="isoOutput" id="isoOutputId" value="100" maxlength="3" size="4" onblur="limitISO();iso.value = isoOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="iso" id="iso" value="100" min="100" max="800" oninput="isoOutputId.value = iso.value" />
+				</dd>
+				<dt>
+				<label>SS</label>
+				<input class="rangetext" type="text" name="ssOutput" id="ssOutputId" value="0" maxlength="8" size="8"  onblur="limitSS();ss.value = ssOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="ss" id="ss" value="0" min="0" max="10000000" oninput="ssOutputId.value = ss.value" />
+				</dd>
+				<dt>
+				<label>Jpeg Quality</label>
+				<input class="rangetext" type="text" name="jpgqualityOutput" id="jpgqualityOutputId" value="75" maxlength="3" size="4" onblur="limitToPositive(jpgqualityOutputId);jpgquality.value = jpgqualityOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<dd>
+				<input class="rangebar" type="range" name="jpgquality" id="jpgquality" value="75" min="0" max="100" oninput="jpgqualityOutputId.value = jpgquality.value"/>
+				</dd>
+				</dl>
+				<div class="text-center">
+				<div class="cambtn btn-group" role="group" aria-label="...">
+					<input id="reset" class="btn btn-primary" type="reset" value="Default"/>
+					<input id="snap" class="btn btn-primary" type="button" onclick="sys_snap();" value="Take Picture"/>	
+					<input id="refresh" class="btn btn-primary" type="button" onclick="getPicInfo();viewPort();" value="Refresh Preview"/>
+				</div>
+				</div>
+			</div>
+		</form>	
+		
+		<div class="cmdSystem text-center col-xs-12 col-md-4">
+		    <label><b>System Control</b></label>
+		    <br>
+		    <input id="reboot" class="btn btn-primary" type="button" onclick="sys_reboot();" value="reboot"/>
+		    <input id="shutdown" class="btn btn-mini btn-primary" type="button" onclick="sys_shutdown();" value="shutdown"/>
+		    <input id="download" class="btn btn-primary" type="submit" onclick="sys_servefiles();" value="Tar pics"/>
+		    <br>
+		    <input id="cancel" class="btn btn-warning" type="button" onclick="sys_kill();" value="Cancel all"/>
+		    <input id="delete" class="btn btn-warning" type="button" onclick="sys_delete();" value="Delete pics"/>
+		    <input id="deletetar" class="btn btn-warning" type="button" onclick="sys_deletetar();" value="Delete Tars"/>
+		    <div id="picinfo" class="picinfo"></div>
+		</div>
+		</div>
+	</div>
+</div>
+<br>
+<div class="container">
+<footer class="footer-bottom">
+      <div class="container">
+        <div class="col-xs-5 col-md-5">
+        	<p class="text-left">
+			Battery level: <label class="battery" id="battery"></label>&emsp;&emsp;CPU Temperature: <label class="cputemp" id="cputemp"></label>
+        	</p>
+        </div>
+      	<div class="col-xs-3 col-md-3">
+        </div>
+        <div class="col-xs-4 col-md-4">
+        	<p class="text-right text-muted">
+        	<span class="glyphicon glyphicon-wrench"></span>  
+        	Osteen Industries 2017&#8482</p>
+        </div>
+      </div>
+</footer>
+</div>
+<script type="text/javascript" src="js/script.js"></script>
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
