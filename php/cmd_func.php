@@ -4,6 +4,18 @@
     echo '<div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"></div>';
   }
 
+  function deleteOne($url) {
+    include "../db.php";
+    unlink('../'.$url);
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {} else {
+      $sql = 'DELETE from imgdat Where imgNice = "'.$url.'"';
+      $conn->query($sql);
+      mysqli_close($conn);
+      echo "done";
+    }
+  }
+
   function deleteImgs() {
     include "../db.php";
     array_map('unlink', glob(dirname(__FILE__)."/../pics/*.jpg"));
@@ -30,6 +42,8 @@
       deleteImgs();
     } else if(strncmp($cmd, "bobby", strlen("bobby")) == 0) {
       array_map('unlink', glob(dirname(__FILE__)."/../pics/*.tar"));
+    } else if(strncmp($cmd, "imgdel", strlen("imgdel")) == 0) {
+      deleteOne($_GET['img']);
     } else if(strncmp($cmd, "worldbank", strlen("worldbank")) == 0) {
       exec('sudo pkill pycam');
     } else if(strncmp($cmd, "zipit", strlen("zipit")) == 0) {

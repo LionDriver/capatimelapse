@@ -18,6 +18,15 @@ if ($result->num_rows > 0) {
 krsort($images);
 $lastimage = key($images);
 
+if (isset($_GET['delit'])) {
+	$url = $_GET['delit'];
+	echo $url;
+	#$sql = 'DELETE from imgdat Where imgNice = "'.$url.'"';
+	#$result = $conn->query($sql);
+	#unlink($url);
+	header("Refresh:0");
+}
+
 echo <<< EOT
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +59,8 @@ if (count($images) <= 0) {
     echo "<h2>No Images Available</h2>";
 }
 else {
- 	echo '<div class="masonry">';
+ 	echo '<div class="row">';
+ 	$images = array_slice($images, -100, 100, true);
  	foreach ($images as $image){
  	   $thumb = exif_thumbnail($image, $width, $height, $type);
  	    if ($thumb === false) {
@@ -60,11 +70,13 @@ else {
 
  	    	//header('Content-type: ' .image_type_to_mime_type($type));
  	    	$nice = date('D, d M y H:i:s', filectime($image));
- 	    	echo '<p class="info">'.$nice."</p>";
- 	    	echo '<div class="brick">';
+ 	    	echo '<div class="pictureframe col-lg-3 col-sm-4 col-xs-6 col-6">';
  	    	echo "<a href=".$image.' class="js-img-viwer" data-caption="'.$nice.'" data-id="'.$nice.'">';
-	        echo "<img width='$width' height='$height' src='data:image;base64,".base64_encode($thumb)."'/></a>";
- 	    	echo '</div>';
+	        echo "<img width='$width' class='thumbnail img-responsive' height='$height' src='data:image;base64,".base64_encode($thumb)."'/></a>";
+	        echo '<div class="caption">';
+ 	        echo '<p class="date">'.$nice.'&nbsp;&nbsp;&nbsp;<a href='.$image.' download><span class="glyphicon glyphicon-download-alt"></span></a>';
+ 	        echo '&nbsp;<a href="" onclick=delimg('.$image.')><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
+ 	    	echo '</div></div>';
  	    }
  	}
 }
@@ -78,6 +90,7 @@ echo <<< EOT
 		new smartPhoto(".js-img-viwer");
 	});
 	</script>
+	<div class="row"></div>
 	<div class="container">
 	<footer class="footer-bottom">
 	      <div class="container">
@@ -91,6 +104,7 @@ echo <<< EOT
 	      </div>
 	</footer>
 	</div>
+	<script type="text/javascript" src="js/gallery.js"></script>
 	<script src="js/jquery-3.2.1.slim.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </body>
@@ -99,5 +113,3 @@ echo <<< EOT
 EOT;
 mysqli_close($conn);
 ?>
-
-
