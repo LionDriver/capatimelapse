@@ -18,15 +18,6 @@ if ($result->num_rows > 0) {
 krsort($images);
 $lastimage = key($images);
 
-if (isset($_GET['delit'])) {
-	$url = $_GET['delit'];
-	echo $url;
-	#$sql = 'DELETE from imgdat Where imgNice = "'.$url.'"';
-	#$result = $conn->query($sql);
-	#unlink($url);
-	header("Refresh:0");
-}
-
 echo <<< EOT
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +66,7 @@ else {
 	        echo "<img width='$width' class='thumbnail img-responsive' height='$height' src='data:image;base64,".base64_encode($thumb)."'/></a>";
 	        echo '<div class="caption">';
  	        echo '<p class="date">'.$nice.'&nbsp;&nbsp;&nbsp;<a href='.$image.' download><span class="glyphicon glyphicon-download-alt"></span></a>';
- 	        echo '&nbsp;<a href="" onclick=delimg('.$image.')><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
+ 	        echo '&nbsp;<a href="" onclick=sys_delOne("'.$image.'");><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
  	    	echo '</div></div>';
  	    }
  	}

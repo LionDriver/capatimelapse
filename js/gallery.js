@@ -11,42 +11,15 @@ function createXHR() {
     }
 }
 
-function addLoadEvent(func) {
-  var oldonload = window.onload;
-  if (typeof window.onload != 'function') {
-    window.onload = func;
-  } else {
-    window.onload = function() {
-      if (oldonload) {
-        oldonload();
-      }
-      func();
-    }
-  }
-}
-
-function delimg($image){
-  var r = confirm("Are you sure you want to delete this image?");
-  if (r == true){
-    var xhr = createXHR();
-    xhr.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-      }
-    };
-    xhr.open("GET", "../php/cmd_func?cmd=delimg&img=$image", true);
-    xhr.send();   
-  }
-}
-
-function getPicInfo() {
+function sys_delOne($img){
+  alert("What the fucking fuck");
   var xhr = createXHR();
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("picinfo").innerHTML = this.responseText;
+      window.alert(this.responseText);
     }
   };
-  xhr.open("GET", "../php/cmd_info.php", true);
+  xhr.open("GET", "../php/cmd_img.php?cmd=delimg&img="+$img, true);
   xhr.send();
 }
 
