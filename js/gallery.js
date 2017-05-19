@@ -12,14 +12,14 @@ function createXHR() {
 }
 
 function sys_delOne($img){
-  alert("What the fucking fuck");
   var xhr = createXHR();
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      window.alert(this.responseText);
+      console.log(this.responseText);
+      document.getElementById("datainfo").value = this.responseText;
     }
   };
-  xhr.open("GET", "../php/cmd_img.php?cmd=delimg&img="+$img, true);
+  xhr.open("GET", "../php/cmd_img.php?cmd=delimg", true);
   xhr.send();
 }
 

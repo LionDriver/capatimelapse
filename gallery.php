@@ -41,6 +41,7 @@ echo <<< EOT
 <body>
 	<div class="container">
 		<h1 class="title page-header">Photo Gallery</h1>
+		<p id="datainfo" class="datainfo "></p>
 		<input class="btn btn-primary" type="button" value="Back" onclick="window.history.back()"/>
 		<br>
 		<br>	
