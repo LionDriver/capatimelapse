@@ -18,6 +18,29 @@ if ($result->num_rows > 0) {
 krsort($images);
 $lastimage = key($images);
 
+function deleteSingleImg($img) {
+    if (file_exists($img)){
+        include "db.php";
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if ($conn->connect_error) {
+            echo 'Delete ERROR: ' . $conn->connect_error;
+            exit;
+        }
+        unlink($img);
+        $sql = 'DELETE from imgdat WHERE imgNice = "'.$img.'"';
+        if ($conn->query($sql) === TRUE) {
+    		header("Refresh:0; url=gallery.php");
+		} else {
+    		echo "Error deleting record: " . $conn->error;
+		}
+        mysqli_close($conn);
+    }
+}
+
+if (isset($_GET['delsingle'])) {
+	deleteSingleImg($_GET['delsingle']);
+}
+
 echo <<< EOT
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +65,7 @@ echo <<< EOT
 	<div class="container">
 		<h1 class="title page-header">Photo Gallery</h1>
 		<p id="datainfo" class="datainfo "></p>
-		<input class="btn btn-primary" type="button" value="Back" onclick="window.history.back()"/>
+		<a href=index.html ><span class="glyphicon glyphicon-home"></span><a/>
 		<br>
 		<br>	
 EOT;
@@ -67,7 +90,7 @@ else {
 	        echo "<img width='$width' class='thumbnail img-responsive' height='$height' src='data:image;base64,".base64_encode($thumb)."'/></a>";
 	        echo '<div class="caption">';
  	        echo '<p class="date">'.$nice.'&nbsp;&nbsp;&nbsp;<a href='.$image.' download><span class="glyphicon glyphicon-download-alt"></span></a>';
- 	        echo '&nbsp;<a href="" onclick=sys_delOne("'.$image.'");><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
+ 	        echo '&nbsp;<a href=gallery.php?delsingle='.$image.'><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
  	    	echo '</div></div>';
  	    }
  	}
@@ -103,5 +126,6 @@ echo <<< EOT
 </html>
 </html>
 EOT;
+
 mysqli_close($conn);
 ?>
