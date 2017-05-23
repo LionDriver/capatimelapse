@@ -44,7 +44,7 @@ $conn->close();
 <body>
   <div class="container">
     <h1 class="title page-header">System Status</h1>
-    <input class="btn btn-primary" type="button" value="Back" onclick="window.history.back()"/>
+    <a href=index.html ><span class="glyphicon glyphicon-home"></span><a/>
     <br>
     <br>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -94,7 +94,6 @@ $conn->close();
     </div>
   </footer>
   </div>
-  <script type="text/javascript" src="js/script.js"></script>
   <script src="js/jquery-3.2.1.slim.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   </body>
