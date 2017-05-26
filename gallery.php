@@ -15,8 +15,8 @@ if ($result->num_rows > 0) {
         $images[] = $row["imgNice"];
     }
 }
-krsort($images);
-$lastimage = key($images);
+
+mysqli_close($conn);
 
 function deleteSingleImg($img) {
     if (file_exists($img)){
@@ -37,8 +37,58 @@ function deleteSingleImg($img) {
     }
 }
 
+function getcount(){
+	include "db.php";
+	$conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        echo 'Database ERROR: ' . $conn->connect_error;
+        exit;
+    }
+    $sql = 'SELECT * FROM imgdat';
+    if ($res= $conn->query($sql)) {
+    	$totalimg = $res->num_rows;  	
+    	mysqli_close($conn);
+    	return $totalimg;
+    }
+}
+
+function scrolldown($lastimg){
+	include "db.php";
+	$conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        echo 'Database ERROR: ' . $conn->connect_error;
+        exit;
+    }
+    $sql = 'SELECT id FROM imgdat WHERE imgNice ="'.$lastimg.'"';
+    if ($res= $conn->query($sql)) {
+    	$totalimg = $res->num_rows;  	
+    	mysqli_close($conn);
+    	return $totalimg;
+    }
+}
+
+function scrollup($count){
+	include "db.php";
+	$conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        echo 'Database ERROR: ' . $conn->connect_error;
+        exit;
+    }
+    $sql = 'SELECT * FROM imgdat';
+    if ($res= $conn->query($sql)) {
+    	$totalimg = $res->num_rows;  	
+    	mysqli_close($conn);
+    	return $totalimg;
+    }
+}
+
+
 if (isset($_GET['delsingle'])) {
 	deleteSingleImg($_GET['delsingle']);
+} else if (isset($_GET['down'])) {
+	scrolldown($_GET['down']);
+} else if (isset($_GET['up'])) {
+	scrollup($_GET['up']);
 }
 
 echo <<< EOT
@@ -64,18 +114,23 @@ echo <<< EOT
 <body>
 	<div class="container">
 		<h1 class="title page-header">Photo Gallery</h1>
-		<p id="datainfo" class="datainfo "></p>
-		<a href=index.html ><span class="glyphicon glyphicon-home"></span><a/>
-		<br>
-		<br>	
 EOT;
-
 if (count($images) <= 0) {
     echo "<h2>No Images Available</h2>";
 }
 else {
+	$countimg = getcount();
+	krsort($images);
+	$lastimage = end($images);
+	$images = array_slice($images, -50, 50, true);
+	echo '<div class="row"><p class="lead">';
+    echo '<a href=index.html ><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp;';
+	echo '&nbsp;&nbsp;Total Photos: '.$countimg.'&nbsp;&nbsp;';
+	echo '<a href=gallery.php?down='.$countimg.'><span class="glyphicon glyphicon-menu-down"></span></a>';
+	echo '<a href=gallery.php?up='.$countimg.'><span class="glyphicon glyphicon-menu-up"></span></a><br><br>';
+	echo '</p></div>';
+	echo '<p id="datainfo" class="datainfo "></p>';
  	echo '<div class="row">';
- 	$images = array_slice($images, -100, 100, true);
  	foreach ($images as $image){
  	   $thumb = exif_thumbnail($image, $width, $height, $type);
  	    if ($thumb === false) {
@@ -127,5 +182,5 @@ echo <<< EOT
 </html>
 EOT;
 
-mysqli_close($conn);
+
 ?>
