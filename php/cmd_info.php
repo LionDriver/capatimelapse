@@ -17,7 +17,8 @@ function formatSize($bytes)
 if ($numimg <= 0) {
 	$numimg = 0;
 }
-echo "Images: ".$numimg.'&nbsp; | &nbsp; Tar Files: '.$numtar.'&nbsp; | &nbsp; Size: '.$clean.'&nbsp; | &nbsp; Free: '.formatSize($df);
+echo '<h6><span class="label label-default">Images: '.$numimg.'&nbsp; | &nbsp; Tar Files: '.$numtar.'&nbsp; | &nbsp; Size: '.
+    $clean.'&nbsp; | &nbsp; Free: '.formatSize($df).'</span></h6>';
 echo "<br>";
 
 if ($numtar <= 0) {

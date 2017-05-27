@@ -337,16 +337,14 @@ function sys_kill() {
 function setcur() {
   setTimeout(function() {
     viewPort();
-    document.body.style.cursor  = 'default';
-    document.getElementById("snap").style.cursor = 'pointer';
+    $("body").removeClass('wait');
   }, 3000);
 }
 
 //take picture or timelapse
 function sys_snap() {
   writeSettings();
-  document.body.style.cursor = 'wait';
-  document.getElementById("snap").style.cursor = 'wait';
+  $("body").toggleClass('wait');
   var xhr = createXHR();
   xhr.open("GET", "../php/cmd_func.php?cmd=snap", true);
   xhr.send();

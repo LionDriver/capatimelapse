@@ -1,5 +1,22 @@
 body {
     background: url("../images/background.jpg") repeat;
+    cursor: default;
+}
+
+body.wait, body.wait *{
+    cursor: wait !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+input:hover {
+    cursor: pointer;
+}
+
+select:hover {
+    cursor: pointer;
 }
 
 p.text-muted {
@@ -47,14 +64,14 @@ input.interval {
     display: inline-block;
     float: right;
 }
-
+/*
 input.radio {
     cursor: pointer;
 }
 
 input.radio:hover {
     cursor: pointer;
-}
+}*/
 
 input.btn {
     border-color: black;
@@ -71,6 +88,7 @@ input#reset {
 }
 
 input#snap {
+    font-weight: bold;
     padding-left: 25px;
     padding-right: 25px;
 }
@@ -126,10 +144,6 @@ div.cmdSystem {
     height: 480px;
     max-width: 100%;
     height: auto;
-}
-
-select:hover {
-    cursor: pointer;
 }
 
 input.rangetext {
