@@ -43,10 +43,10 @@ document.onkeydown = function (e) {
 };
 
 imagereload = setInterval("viewPort()", 60000); //60000
-var interval    = setInterval("loadBatt()", 20000);
-var cputemp     = setInterval("loadCpuTemp()", 20000);
-var picinfo     = setInterval("getPicInfo()", 2000);
-var timerID     = null;
+var interval = setInterval("loadBatt()", 20000);
+var cputemp = setInterval("loadCpuTemp()", 20000);
+var picinfo = setInterval("getPicInfo()", 2000);
+var timerID = null;
 var timerRunning = false;
 
 //display video stream or set to timelapse/single picture mode

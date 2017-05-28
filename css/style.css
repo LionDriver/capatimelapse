@@ -11,11 +11,11 @@ button {
     cursor: pointer;
 }
 
-input:hover {
+input {
     cursor: pointer;
 }
 
-select:hover {
+select {
     cursor: pointer;
 }
 
@@ -64,14 +64,6 @@ input.interval {
     display: inline-block;
     float: right;
 }
-/*
-input.radio {
-    cursor: pointer;
-}
-
-input.radio:hover {
-    cursor: pointer;
-}*/
 
 input.btn {
     border-color: black;

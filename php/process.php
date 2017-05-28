@@ -4,7 +4,6 @@ define('CONFIGFILE', '../config.txt');
 
 error_reporting(E_ALL);
 
-
 $hflip      = $_POST['hflip'];
 $vflip      = $_POST['vflip'];
 $resolution = $_POST['resolution'];

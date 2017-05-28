@@ -30,8 +30,6 @@
       deleteImgs();
     } else if(strncmp($cmd, "bobby", strlen("bobby")) == 0) {
       array_map('unlink', glob(dirname(__FILE__)."/../pics/*.tar"));
-    } else if(strncmp($cmd, "delimg", strlen("delimg")) == 0) {
-      deleteOne("tryiot");
     } else if(strncmp($cmd, "worldbank", strlen("worldbank")) == 0) {
       exec('sudo pkill pycam');
     } else if(strncmp($cmd, "zipit", strlen("zipit")) == 0) {

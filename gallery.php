@@ -61,9 +61,7 @@ function scrolldown($lastimg){
     }
     $sql = 'SELECT id FROM imgdat WHERE imgNice ="'.$lastimg.'"';
     if ($res= $conn->query($sql)) {
-    	$totalimg = $res->num_rows;  	
-    	mysqli_close($conn);
-    	return $totalimg;
+
     }
 }
 
@@ -174,7 +172,6 @@ echo <<< EOT
 	      </div>
 	</footer>
 	</div>
-	<script type="text/javascript" src="js/gallery.js"></script>
 	<script src="js/jquery-3.2.1.slim.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </body>
