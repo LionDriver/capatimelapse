@@ -2,11 +2,15 @@ body {
     background: url("../images/background.jpg") repeat;
 }
 
+.through {
+    margin-left: 35px;
+}
+
 .pictureframe {
     background-color: #F2F2F2;
     border-radius: 7px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-    padding: 5px;
+    padding: 4px;
 }
 
 .title {
@@ -17,5 +21,28 @@ body {
 
 .date {
     margin-top: 2px;
+    text-align: center;
+}
+
+.total {
+    float: right;
+    text-align: right;
+}
+
+a.next {
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+    font-size: 36px;
+}
+
+a.last {
+    display: inline-block;
+    text-align: center;
+    margin: 5px;
+    font-size: 36px;
+}
+
+div.navigation {
     text-align: center;
 }
