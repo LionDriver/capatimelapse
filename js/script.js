@@ -225,7 +225,9 @@ function loadCpuTemp() {
   var xhr = createXHR();
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("cputemp").innerHTML = this.responseText;
+      var cpu = parseFloat(this.responseText);
+      var n = cpu.toFixed(2);
+      document.getElementById("cputemp").innerHTML = n;
     }
   };
   xhr.open("GET", "../cputemp.txt", true);

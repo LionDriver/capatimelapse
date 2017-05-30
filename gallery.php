@@ -21,7 +21,7 @@
     <div class="container">
         <h1 class="title page-header">Photo Gallery</h1>
 <?php
-
+$rec_limit = 28;
 function deleteSingleImg($img) {
     if (file_exists($img)){
         include "db.php";
@@ -33,7 +33,6 @@ function deleteSingleImg($img) {
         unlink($img);
         $sql = 'DELETE from imgdat WHERE imgNice = "'.$img.'"';
         if ($conn->query($sql) === TRUE) {
-            header("Refresh:0; url=gallery.php");
         } else {
             echo "Error deleting record: " . $conn->error;
         }
@@ -41,8 +40,9 @@ function deleteSingleImg($img) {
     }
 }
 
-
-$rec_limit = 28;
+function is_undefined(&$test) {
+    return isset($test);
+}
 
 function getcount() {
 	include "db.php";
@@ -65,11 +65,23 @@ function getcount() {
 
 $rec_count = getcount();
 
-if (isset($_GET['delsingle'])) {
-    deleteSingleImg($_GET['delsingle']);
-} else if (isset($_GET{'page'})) {
+if (is_undefined($page)) {
+	echo "page is undefined";
+	exit;
+}
+
+if (isset($_GET{'page'})) {
     $page = $_GET{'page'} + 1;
     $offset = $rec_limit * $page;
+} else if (isset($_GET['delsingle'])) {
+    deleteSingleImg($_GET['delsingle']);
+    $page = $_GET["loc"] - 1;
+    if ($page < 1) {
+    	$offset=0;
+    } else {
+    	$offset = $rec_limit * $page;    	
+    }
+    header("Refresh:0; url=gallery.php?page=$page");
 } else {
     $page=0;
     $offset=0;
@@ -132,7 +144,7 @@ while ($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)){
         echo "<img width='$width' class='thumbnail img-responsive' height='$height' src='data:image;base64,".base64_encode($thumb)."'/></a>";
         echo '<strong><div class="caption">';
         echo '<p class="date">'.$nice.'&nbsp;&nbsp;&nbsp;<a href='.$imgfile.' download data-toggle="tooltip" title="Download Photo"><span class="glyphicon glyphicon-download-alt"></span></a>';
-        echo '&nbsp;<a href=gallery.php?delsingle='.$imgfile.' data-toggle="tooltip" title="Delete Photo"><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
+        echo '&nbsp;<a href=gallery.php?delsingle='.$imgfile.'&loc='.$page.' data-toggle="tooltip" title="Delete Photo"><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
         echo '</strong></div></div>';
     }
 }
