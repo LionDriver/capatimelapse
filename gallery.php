@@ -40,10 +40,6 @@ function deleteSingleImg($img) {
     }
 }
 
-function is_undefined(&$test) {
-    return isset($test);
-}
-
 function getcount() {
 	include "db.php";
 	$conn = new mysqli($servername, $username, $password, $dbname);
@@ -64,10 +60,11 @@ function getcount() {
 }
 
 $rec_count = getcount();
-
-if (is_undefined($page)) {
-	echo "page is undefined";
-	exit;
+if ($rec_count < 1) {
+    echo '<div class="container-fluid"><div class="row"><p class="lead">';
+    echo '<a href=index.html data-toggle="tooltip" title="Home"><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp;';
+    echo '<h1>No Images Available</h1></div></p></div></body></html>';
+    exit;
 }
 
 if (isset($_GET{'page'})) {
@@ -106,7 +103,7 @@ if (! $retval ){
     exit;
 }
 echo '<div class="container-fluid"><div class="row"><p class="lead">';
-echo '<a href=index.html ><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp;';
+echo '<a href=index.html data-toggle="tooltip" title="Home"><span class="glyphicon glyphicon-home"></span></a>&nbsp;&nbsp;';
 echo '<strong class="through">Photos: '.$rec_plus.' - '.$left_rec.'</strong>';
 echo '&nbsp;&nbsp;<strong class="total">Total Photos: '.$rec_count.'</strong>&nbsp;&nbsp;';
 echo '</p></div>';
@@ -117,15 +114,15 @@ echo '<ul class="nav navbar-nav">';
 if ($left_rec < $rec_limit){
     $last = $page - 2;
     echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-backward"></span></a></li>';
-    echo '<li><a class="last" href="gallery.php?page='.$last.'" ><span class="glyphicon glyphicon-forward"></span></a></li>';
+    echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
 }
 else if ($page > 0){
     $last = $page-2;
-    echo '<li><a class="next" href="gallery.php?page='.$page.'" ><span class="glyphicon glyphicon-backward"></span></a></li>';
-    echo '<li><a class="last" href="gallery.php?page='.$last.'" ><span class="glyphicon glyphicon-forward"></span></a></li>';
+    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
+    echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
 }
 else if($page == 0){
-    echo '<li><a class="next" href="gallery.php?page='.$page.'" ><span class="glyphicon glyphicon-backward"></span></a></li>';
+    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
     echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-forward"></span></a></li>';
 }
 
