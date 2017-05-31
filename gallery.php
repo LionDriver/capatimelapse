@@ -27,7 +27,7 @@ function deleteSingleImg($img) {
         include "db.php";
         $conn = new mysqli($servername, $username, $password, $dbname);
         if ($conn->connect_error) {
-            echo 'Database ERROR: ' . $conn->connect_error;
+            echo 'Database ERROR in delete: ' . $conn->connect_error;
             exit;
         }
         unlink($img);
@@ -44,7 +44,7 @@ function getcount() {
 	include "db.php";
 	$conn = new mysqli($servername, $username, $password, $dbname);
 	if ($conn->connect_error) {
-    	echo 'Database ERROR: ' . $conn->connect_error;
+    	echo 'Database ERROR getting count: ' . $conn->connect_error;
     	exit;
 	}
 	$sql = "SELECT count(imgId) FROM imgdat";
@@ -73,12 +73,16 @@ if (isset($_GET{'page'})) {
 } else if (isset($_GET['delsingle'])) {
     deleteSingleImg($_GET['delsingle']);
     $page = $_GET["loc"] - 1;
-    if ($page < 1) {
+    if ($page <= -1) {
+        $page = -1;
+        $offset=0;
+    } else if ($page < 1) {
     	$offset=0;
     } else {
     	$offset = $rec_limit * $page;    	
     }
     header("Refresh:0; url=gallery.php?page=$page");
+    exit;
 } else {
     $page=0;
     $offset=0;
@@ -86,20 +90,21 @@ if (isset($_GET{'page'})) {
 
 $left_rec = $rec_count - ($page * $rec_limit);
 $rec_plus = $left_rec - 28;
-if ($rec_plus < 0) {
-	$rec_plus = 1;
+if ($rec_plus < 1) {
+	$rec_plus = 0;
 }
 
 include "db.php";
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-	echo 'Database ERROR: ' . $conn->connect_error;
+	echo 'Database ERROR connecting: ' . $conn->connect_error;
 	exit;
 }
+
 $sql = "SELECT imgNice FROM imgdat ORDER BY imgId DESC LIMIT $offset, $rec_limit";
 $retval = $conn->query($sql);
 if (! $retval ){
-    echo 'Database error: '. $conn->error;
+    echo 'Database error in reading records: '. $conn->error;
     exit;
 }
 echo '<div class="container-fluid"><div class="row"><p class="lead">';
@@ -111,24 +116,24 @@ echo '<div class="row">';
 echo '<div class="navigation">';
 echo '<ul class="nav navbar-nav">';
 
-if ($page == 0 || $page == -1){
- 	if ($left_rec == $rec_limit || $left_rec < $rec_limit){
-		echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-backward"></span></a></li>';
-		echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-forward"></span></a></li>';	
+if ($page <= 0){
+ 	if ($left_rec <= $rec_limit){
+        echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-backward"></span></a></li>';
+		echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-forward"></span></a></li>';
 	} else {
-	    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
-    	echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-forward"></span></a></li>';	
+	    echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-backward"></span></a></li>';
+        echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
 	}
 }
 else if ($left_rec < $rec_limit){
     $last = $page - 2;
-	echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-backward"></span></a></li>';
-	echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';	
+    echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
+	echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-forward"></span></a></li>';
 }
 else if ($page > 0){
     $last = $page - 2;
-    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
-    echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
+    echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-backward"></span></a></li>';    
+    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
 }
 
 echo '</ul></div></div></div><div class="row">';

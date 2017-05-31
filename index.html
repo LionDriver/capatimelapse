@@ -24,7 +24,7 @@
                  |
                 <label class="ip" id="ip"></label>
                  | &emsp;
-                <a id="gallery" type=button class="btn btn-primary" href="gallery.php">Photo Gallery</a>
+                <a id="gallery" type=button class="btn btn-primary" href="gallery.php" data-toggle="tooltip" title="Photo Gallery">Photo Gallery</a>
                 <label class="clock" id="clock"></label>
         </div>
     </div>
@@ -42,7 +42,7 @@
 			    </label>
 			</div> -->
 			<dt><label>Timelapse Interval</label></dt>
-			<dd><select id="interval" name="interval" onchange="checkSelected();">
+			<dd><select id="interval" name="interval" onchange="checkSelected();" data-toggle="tooltip" title="How often you will take a picture">
 				<option selected>0</option>
 				<option>2 sec</option>
 				<option>5 sec</option>
@@ -59,7 +59,7 @@
 				<option>24 hour</option>
 			</select></dd>
 			<dt><label>Timelapse Duration</label></dt>
-			<dd><select id="duration" name="duration">
+			<dd><select id="duration" name="duration" data-toggle="tooltip" title="Duration of your timelapse">
 				<option>1 min</option>
 				<option>5 min</option>
 				<option>10 min</option>
@@ -133,7 +133,7 @@
 				<option>matrix</option>
 			</select></dd>
 			<dt><label>D.R.C.</label></dt>
-			<dd><select id="drc" name="drc">
+			<dd><select id="drc" name="drc" data-toggle="tooltip" title="Dynamic Range Compression">
 				<option selected>off</option>
 				<option>low</option>
 				<option>medium</option>
@@ -203,20 +203,20 @@
 				</dd>
 				<dt>
 				<label>SS</label>
-				<input class="rangetext" type="text" name="ssOutput" id="ssOutputId" value="0" maxlength="8" size="8"  onblur="limitSS();ss.value = ssOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<input class="rangetext" type="text" name="ssOutput" id="ssOutputId" value="0" maxlength="8" size="8"  onblur="limitSS();ss.value = ssOutputId.value" onkeypress="return isNumberKey(event);" data-toggle="tooltip" title="Shutter Speed (0 = Auto)"></input></dt>
 				<dd>
-				<input class="rangebar" type="range" name="ss" id="ss" value="0" min="0" max="10000000" oninput="ssOutputId.value = ss.value" />
+				<input class="rangebar" type="range" name="ss" id="ss" value="0" min="0" max="10000000" oninput="ssOutputId.value = ss.value" data-toggle="tooltip" title="Shutter Speed (0 = Auto)" />
 				</dd>
 				<dt>
 				<label>Jpeg Quality</label>
-				<input class="rangetext" type="text" name="jpgqualityOutput" id="jpgqualityOutputId" value="75" maxlength="3" size="4" onblur="limitToPositive(jpgqualityOutputId);jpgquality.value = jpgqualityOutputId.value" onkeypress="return isNumberKey(event);"></input></dt>
+				<input class="rangetext" type="text" name="jpgqualityOutput" id="jpgqualityOutputId" value="75" maxlength="3" size="4" onblur="limitToPositive(jpgqualityOutputId);jpgquality.value = jpgqualityOutputId.value" onkeypress="return isNumberKey(event);" data-toggle="tooltip" title="JPEG Compression Quality"></input></dt>
 				<dd>
-				<input class="rangebar" type="range" name="jpgquality" id="jpgquality" value="75" min="0" max="100" oninput="jpgqualityOutputId.value = jpgquality.value"/>
+				<input class="rangebar" type="range" name="jpgquality" id="jpgquality" value="75" min="0" max="100" oninput="jpgqualityOutputId.value = jpgquality.value" data-toggle="tooltip" title="JPEG Compression Quality"></input>
 				</dd>
 				</dl>
 				<div class="text-center">
 				<div class="cambtn btn-group" role="group" aria-label="...">
-					<input id="reset" class="btn btn-primary" type="reset" value="Default"/>
+					<input id="reset" class="btn btn-primary" type="reset" value="Default" data-toggle="tooltip" title="Reset all settings to default"/>
 					<input id="snap" class="btn btn-primary" type="button" onclick="sys_snap();" value="Take Picture"/>	
 					<input id="refresh" class="btn btn-primary" type="button" onclick="getPicInfo();viewPort();" value="Refresh Preview"/>
 				</div>
@@ -227,11 +227,11 @@
 		<div class="cmdSystem text-center col-xs-12 col-md-4">
 		    <label><b>System Control</b></label>
 		    <br>
-		    <input id="reboot" class="btn btn-primary" type="button" onclick="sys_reboot();" value="reboot"/>
-		    <input id="shutdown" class="btn btn-mini btn-primary" type="button" onclick="sys_shutdown();" value="shutdown"/>
+		    <input id="reboot" class="btn btn-primary" type="button" onclick="sys_reboot();" value="reboot" data-toggle="tooltip" title="Reboot system"/>
+		    <input id="shutdown" class="btn btn-mini btn-primary" type="button" onclick="sys_shutdown();" value="shutdown" data-toggle="tooltip" title="System shutdown"/>
 		    <input id="download" class="btn btn-primary" type="submit" onclick="sys_servefiles();" value="Tar pics"/>
 		    <br>
-		    <input id="cancel" class="btn btn-warning" type="button" onclick="sys_kill();" value="Cancel all"/>
+		    <input id="cancel" class="btn btn-warning" type="button" onclick="sys_kill();" value="Cancel all" data-toggle="tooltip" title="Cancel all camera activity"/>
 		    <input id="delete" class="btn btn-warning" type="button" onclick="sys_delete();" value="Delete pics"/>
 		    <input id="deletetar" class="btn btn-warning" type="button" onclick="sys_deletetar();" value="Delete Tars"/>
 		    <div id="picinfo" class="picinfo"></div>
@@ -262,4 +262,4 @@
 <script src="js/jquery-3.2.1.slim.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
-</html>
+</html> data-toggle="tooltip" title="JPEG Compression Quality"
