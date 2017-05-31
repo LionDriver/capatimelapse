@@ -111,19 +111,24 @@ echo '<div class="row">';
 echo '<div class="navigation">';
 echo '<ul class="nav navbar-nav">';
 
-if ($left_rec < $rec_limit){
+if ($page == 0 || $page == -1){
+ 	if ($left_rec == $rec_limit || $left_rec < $rec_limit){
+		echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-backward"></span></a></li>';
+		echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-forward"></span></a></li>';	
+	} else {
+	    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
+    	echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-forward"></span></a></li>';	
+	}
+}
+else if ($left_rec < $rec_limit){
     $last = $page - 2;
-    echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-backward"></span></a></li>';
-    echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
+	echo '<li class="disabled"><a class="next" ><span class="glyphicon glyphicon-backward"></span></a></li>';
+	echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';	
 }
 else if ($page > 0){
-    $last = $page-2;
+    $last = $page - 2;
     echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
     echo '<li><a class="last" href="gallery.php?page='.$last.'" data-toggle="tooltip" title="Last Set"><span class="glyphicon glyphicon-forward"></span></a></li>';
-}
-else if($page == 0){
-    echo '<li><a class="next" href="gallery.php?page='.$page.'" data-toggle="tooltip" title="Next Set"><span class="glyphicon glyphicon-backward"></span></a></li>';
-    echo '<li class="disabled"><a class="last" ><span class="glyphicon glyphicon-forward"></span></a></li>';
 }
 
 echo '</ul></div></div></div><div class="row">';
