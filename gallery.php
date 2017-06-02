@@ -101,7 +101,7 @@ if ($conn->connect_error) {
 	exit;
 }
 
-$sql = "SELECT imgNice FROM imgdat ORDER BY imgId DESC LIMIT $offset, $rec_limit";
+$sql = "SELECT * FROM imgdat ORDER BY imgId DESC LIMIT $offset, $rec_limit";
 $retval = $conn->query($sql);
 if (! $retval ){
     echo 'Database error in reading records: '. $conn->error;
@@ -139,6 +139,7 @@ else if ($page > 0){
 echo '</ul></div></div></div><div class="row">';
 
 while ($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)){
+    $pic = $row["imgId"];
     $imgfile = $row["imgNice"];
     $thumb = exif_thumbnail($imgfile, $width, $height, $type);
     if ($thumb === false) {
@@ -150,14 +151,35 @@ while ($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)){
         echo "<a href=".$imgfile.' class="js-img-viwer" data-caption="'.$nice.'" data-id="'.$nice.'">';
         echo "<img width='$width' class='thumbnail img-responsive' height='$height' src='data:image;base64,".base64_encode($thumb)."'/></a>";
         echo '<strong><div class="caption">';
-        echo '<p class="date">'.$nice.'&nbsp;&nbsp;&nbsp;<a href='.$imgfile.' download data-toggle="tooltip" title="Download Photo"><span class="glyphicon glyphicon-download-alt"></span></a>';
-        echo '&nbsp;<a href=gallery.php?delsingle='.$imgfile.'&loc='.$page.' data-toggle="tooltip" title="Delete Photo"><span class="glyphicon glyphicon-remove-circle"></span></a></p>';
+        echo '<p class="date">'.$nice;
+        echo '&nbsp;&nbsp;&nbsp;<a id="eye" data-toggle="collapse" data-target="#settings'.$pic.'"><span class="glyphicon glyphicon-eye-open"></span></a>';
+        echo '<div id="settings'.$pic.'" class="collapse">';
+        echo '<ul class="list-group">';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgRes"].'</span>Resolution</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgAwb"].'</span>White Balance</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgEx"].'</span>Exposure</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgMeter"].'</span>Meter</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgEffect"].'</span>Effects</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgDrc"].'</span>Dynamic Range Compression</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgSharpness"].'</span>Sharpness</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgContrast"].'</span>Contrast</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgBrightness"].'</span>Brightness</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgSaturation"].'</span>Saturation</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgIso"].'</span>ISO</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgSS"].'</span>Shutter Speed</li>';
+        echo '<li class="list-group-item list-group-item-success"><span class="badge">'.$row["imgJpg"].'</span>JPEG Quality</li>';
+        echo '</ul></div>';
+        echo '&nbsp;<a class="download" href='.$imgfile.' download data-toggle="tooltip" title="Download Photo">';
+        echo '<span class="glyphicon glyphicon-download-alt"></span></a>';
+        echo '&nbsp;&nbsp;&nbsp;<a class="delete" href=gallery.php?delsingle='.$imgfile.'&loc='.$page;
+        echo ' data-toggle="tooltip" title="Delete Photo"><span class="glyphicon glyphicon-remove-circle" style="color:#800000"></span></a></p>';
         echo '</strong></div></div>';
     }
 }
 
 mysqli_close($conn);
 ?>
+
         </div>
     </div>
     <script src="./js/smartphoto.js?v=1"></script>

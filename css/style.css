@@ -223,3 +223,7 @@ div.onoffswitch {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px; 
 }
+
+ul {
+  list-style-type: none;
+}

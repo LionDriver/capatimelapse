@@ -25,11 +25,11 @@ if ($numtar <= 0) {
 	$numtar = 0;
 }
 else {
-	echo "<ol>";
+	echo "<ul>";
 	foreach ($tar as $key => $value) {
 		$nice = substr($value, 8, 35);
 		echo '<li><a target=_self href='.$value.'>'.$nice.'&emsp;</a></li>';
 	}
-	echo "</ol>";
+	echo "</ul>";
 }
 ?>

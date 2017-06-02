@@ -46,3 +46,19 @@ a.last {
 div.navigation {
     text-align: center;
 }
+
+.delete {
+    text-align: right;
+    float: right;
+}   
+
+.download {
+    text-align: right;
+    padding-left: 5px;
+}
+
+#eye {
+    cursor: pointer;
+    margin-top: 5px;
+    font-size: 1.3em;
+}
