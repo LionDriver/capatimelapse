@@ -16,7 +16,7 @@ import MySQLdb
 import logging
 import logging.handlers
 
-basedir = os.path.abspath("../") + "/capatimelapse/"
+basedir = os.path.abspath("../")
 log = logging.getLogger('PiCamLog')
 log.setLevel(logging.DEBUG)  # prod: logging.ERROR
 handler = logging.handlers.SysLogHandler(address='/dev/log')
@@ -39,7 +39,7 @@ def readConfig():
     # config.txt is a symlinked file written by the php web interface
     # This gets the camera settings
     try:
-        configfile = open(basedir + "config.txt", 'r')
+        configfile = open(basedir + "/config.txt", 'r')
         content = configfile.read()
         content = content.rstrip()
         settings = content.split("\n")
@@ -99,6 +99,7 @@ def dbinsert(imageurl, nice, setting_dict):
         db.rollback()
         log.critical('error in submission: %s', e)
     finally:
+        log.debug('image data submitted to database')
         db.close()
 
 
@@ -109,7 +110,7 @@ def snapcap(settings):
         time.sleep(2)  # Warm up the sensor
         getsettings(camera, settings)
         timenow = time.strftime("%Y-%m-%d_%H%M%S")
-        filename = basedir + "pics/" + timenow + ".jpg"
+        filename = basedir + "/pics/" + timenow + ".jpg"
         nice = "pics/" + timenow + ".jpg"
         camera.capture(filename, format="jpeg", quality=int(settings["jpgquality"]), thumbnail=(320, 240, 80))
         log.debug('capture taken: %s', filename)
@@ -128,7 +129,7 @@ def fastinterval(interval, duration, settings):
         time.sleep(2)
         for i in range(duration):
             timenow = time.strftime("%Y-%m-%d_%H%M%S")
-            filename = basedir + "pics/" + timenow + "%02d.jpg" % i
+            filename = basedir + "/pics/" + timenow + "%02d.jpg" % i
             nice = "pics/" + timenow + "%02d.jpg" % i
             camera.capture(filename, format="jpeg", quality=int(settings["jpgquality"]), thumbnail = (320, 240, 80))
             log.debug('capture taken: %s', filename)
@@ -145,7 +146,7 @@ def longinterval(interval, duration, settings):
         camera = PiCamera()
         getsettings(camera, settings)
         timenow = time.strftime("%Y-%m-%d_%H%M%S")
-        filename = basedir + "pics/" + timenow + "%02d.jpg" % i
+        filename = basedir + "/pics/" + timenow + "%02d.jpg" % i
         nice = "pics/" + timenow + "%02d.jpg" % i
         time.sleep(5)  # warm up sensor
         camera.capture(filename, format="jpeg", quality=int(settings["jpgquality"]),thumbnail = (320, 240, 80))

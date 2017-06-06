@@ -340,7 +340,7 @@ function setcur() {
   setTimeout(function() {
     viewPort();
     $("body").removeClass('wait');
-  }, 3000);
+  }, 1000);
 }
 
 //take picture or timelapse
@@ -353,5 +353,5 @@ function sys_snap() {
   setTimeout(function (){
     getPicInfo();
     setcur();
-  }, 1000);
+  }, 3000);
 }
