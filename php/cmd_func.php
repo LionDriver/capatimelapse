@@ -25,7 +25,7 @@
     } else if(strncmp($cmd, "ip", strlen("ip")) == 0) {
       echo $_SERVER['SERVER_ADDR'];
     } else if(strncmp($cmd, "snap", strlen("snap")) == 0) {
-      exec('/home/pi/timelapse/capaMain.py');
+      exec('/home/pi/capatimelapse/capa-system/capaMain.py');
     } else if(strncmp($cmd, "bobhope", strlen("bobhope")) == 0) {
       deleteImgs();
     } else if(strncmp($cmd, "bobby", strlen("bobby")) == 0) {
