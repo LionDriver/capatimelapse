@@ -16,7 +16,7 @@ import MySQLdb
 import logging
 import logging.handlers
 
-basedir = os.path.expanduser('~') + "/capatimelapse/"
+basedir = os.path.abspath("../") + "/capatimelapse/"
 log = logging.getLogger('PiCamLog')
 log.setLevel(logging.DEBUG)  # prod: logging.ERROR
 handler = logging.handlers.SysLogHandler(address='/dev/log')
