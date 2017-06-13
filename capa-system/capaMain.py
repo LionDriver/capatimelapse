@@ -17,7 +17,7 @@ import logging
 import logging.handlers
 
 basedir = os.path.abspath("../")
-log = logging.getLogger('PiCamLog')
+log = logging.getLogger('CapaTimeLapseLog')
 log.setLevel(logging.DEBUG)  # prod: logging.ERROR
 handler = logging.handlers.SysLogHandler(address='/dev/log')
 formatter = logging.Formatter('%(name)-12s %(levelname)-8s %(message)s')

@@ -340,7 +340,7 @@ function setcur() {
   setTimeout(function() {
     viewPort();
     $("body").removeClass('wait');
-  }, 1000);
+  }, 2000);
 }
 
 //take picture or timelapse

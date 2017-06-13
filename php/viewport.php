@@ -6,7 +6,7 @@ krsort($images);
 $lastimage = key($images);
 
 if (count($images) <= 0) {
-    echo "<h2>No Images available</h2>";
+    echo "<h2>No Images Available</h2>";
 }
 else {
 	echo '<div class="span3"><a target=_self href='.$images[$lastimage].'><img class="img-responsive" src="'.$images[$lastimage].' " alt="Please Wait"></a>';
