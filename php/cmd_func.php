@@ -31,7 +31,7 @@
     } else if(strncmp($cmd, "bobby", strlen("bobby")) == 0) {
       array_map('unlink', glob(dirname(__FILE__)."/../pics/*.tar"));
     } else if(strncmp($cmd, "worldbank", strlen("worldbank")) == 0) {
-      exec('sudo pkill camMain');
+      exec('sudo pkill capaMain');
     } else if(strncmp($cmd, "zipit", strlen("zipit")) == 0) {
       ini_set('max_execution_time', 600);
       $images = glob('../pics/*.jpg', GLOB_BRACE);
