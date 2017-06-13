@@ -1,0 +1,11 @@
+[Unit]
+Description=Capatimelapse log system data
+After=multi-user.target
+ 
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/pi/capatimelapse/capa-system/capaSystem.py
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target

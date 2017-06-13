@@ -1,7 +1,7 @@
 #!/bin/bash
 # capatimelapse installer
 # For use on raspbian with raspberry pi camera
-# version 0.0.8 6/12/2017
+# Version 0.0.8 SlumberMachine 6/12/2017
 # TODO system items & database needs to be added
 # TODO Pipoint options and setup
 echo "This is the capatimelapse installer"
@@ -10,9 +10,14 @@ if [ "$EUID" -ne 0 ]
   then echo "Please run as root or using sudo"
   exit
 fi
-
+echo "Running updates and installing Dependencies"
 apt-get update && sudo apt-get -y dist-upgrade;
-apt-get -y install lighttpd php5-common php5-cgi php5 php5-mysql python-picamera python3-picamera mysql-server python-mysqldb;
+apt-get -y install lighttpd php5-common php5-cgi php5 php5-mysql python-picamera python3-picamera python-mysqldb;
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password 23rdqw'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password 23rdqw'
+apt-get -y install mysql-server
+
+echo "Moving things into place"
 lighttpd-enable-mod fastcgi-php;
 rm /var/www/html/index.lighttpd.html
 cp -R /home/pi/capatimelapse/php /home/pi/capatimelapse/js /home/pi/capatimelapse/images /home/pi/capatimelapse/fonts /home/pi/capatimelapse/css /var/www/html/
@@ -26,6 +31,7 @@ echo '<?php $servername = "localhost"; $username = "monitor"; $password = "23rdq
 mv db.php /var/www/html/
 /etc/init.d/lighttpd force-reload
 
+echo "Granting permissions"
 mysql -u root -p23rdqw -e "CREATE DATABASE images";
 mysql -u root -p23rdqw -e "CREATE USER 'monitor'@'localhost' IDENTIFIED BY '23rdqw'";
 mysql -u root -p23rdqw -e "GRANT ALL PRIVILEGES ON images.* TO 'monitor'@'localhost'";
@@ -34,19 +40,20 @@ mysql -u root -p23rdqw images < /home/pi/capatimelapse/capa-system/images.sql
 
 echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -h now' | sudo EDITOR='tee -a' visudo
 echo 'www-data ALL=(ALL) NOPASSWD:/sbin/reboot' | sudo EDITOR='tee -a' visudo
+echo 'www-data ALL=(ALL) NOPASSWD:/usr/bin/pkill' | sudo EDITOR='tee -a' visudo
+
 usermod -a -G video www-data
 usermod -a -G pi www-data
 usermod -a -G gpio www-data
 sed -i "s/^www-data:x.*/www-data:x:33:33:www-data:\/var\/www:\/bin\/bash/g" /etc/passwd
+chown -R www-data:www-data /var/www/html
 
+echo "Checking camera firmware"
 if grep "start_x=1" /boot/config.txt
 then
-    exit
+    echo "Nice! Camera is already set"
 else
     sed -i "s/start_x=0/start_x=1/g" /boot/config.txt
+    echo "Set Camera firmware On"
 fi
-CUR_GPU_MEM=$(get_config_var gpu_mem /boot/config.txt)
-if [ -z "$CUR_GPU_MEM" ] || [ "$CUR_GPU_MEM" -lt 128 ]; then
-    set_config_var gpu_mem 128 /boot/config.txt
-fi
-
+echo "All done, please REBOOT, Have a nice day!"
