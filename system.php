@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 
 include "db.php";
-$dbname = "cputemps";
+$dbname = "system";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
