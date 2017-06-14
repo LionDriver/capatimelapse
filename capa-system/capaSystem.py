@@ -33,12 +33,12 @@ def get_batt():
         output = t1.communicate()[0]
         clean = output.rstrip()
         return clean
-    except Exception as e:
-        return ""
+    except Exception:
+        return "0"
 
 def insert_db(temp, battery):
     try:
-        db = MySQLdb.connect("localhost", "monitor", "23rdqw", "cputemps")
+        db = MySQLdb.connect("localhost", "monitor", "23rdqw", "system")
     except Exception as e:
         log.critical('Error accessing database: %s', e)
         sys.exit('Error accessing database')

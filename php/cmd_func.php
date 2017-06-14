@@ -4,6 +4,34 @@
     echo '<div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"></div>';
   }
 
+  function getBattLevel() {
+    include "../db.php";
+    $dbname = "system";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $sql = "SELECT batt FROM tempdat ORDER BY id DESC LIMIT 1";
+    $result = $conn->query($sql);
+    if ($result === false){
+      return "0";
+    }
+    $value = mysqli_fetch_array($result);
+    mysqli_close($conn);
+    return $value[0];
+  }
+
+  function getCpuTemp() {
+    include "../db.php";
+    $dbname = "system";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $sql = "SELECT temp FROM tempdat ORDER BY id DESC LIMIT 1";
+    $result = $conn->query($sql);
+    if ($result === false){
+      return "0";
+    }
+    $value = mysqli_fetch_array($result);
+    mysqli_close($conn);
+    return $value[0];
+  }
+
   function deleteImgs() {
     include "../db.php";
     array_map('unlink', glob(dirname(__FILE__)."/../pics/*.jpg"));
@@ -32,6 +60,12 @@
       array_map('unlink', glob(dirname(__FILE__)."/../pics/*.tar"));
     } else if(strncmp($cmd, "worldbank", strlen("worldbank")) == 0) {
       exec('sudo pkill capaMain');
+    } else if(strncmp($cmd, "systemp", strlen("systemp")) == 0) {
+      $cputemp = getCpuTemp();
+      echo $cputemp;
+    } else if(strncmp($cmd, "sysbatt", strlen("sysbatt")) == 0) {
+      $battlvl = getBattLevel();
+      echo $battlvl;
     } else if(strncmp($cmd, "zipit", strlen("zipit")) == 0) {
       ini_set('max_execution_time', 600);
       $images = glob('../pics/*.jpg', GLOB_BRACE);

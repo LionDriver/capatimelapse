@@ -217,7 +217,7 @@ function loadBatt() {
      document.getElementById("battery").innerHTML = this.responseText;
     }
   };
-  xhr.open("GET", "../batt.txt", true);
+  xhr.open("GET", "../php/cmd_func.php?cmd=sysbatt", true);
   xhr.send();
 };
 
@@ -230,7 +230,7 @@ function loadCpuTemp() {
       document.getElementById("cputemp").innerHTML = n;
     }
   };
-  xhr.open("GET", "../cputemp.txt", true);
+  xhr.open("GET", "../php/cmd_func.php?cmd=systemp", true);
   xhr.send();
 }
 

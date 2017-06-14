@@ -1,9 +1,10 @@
 #!/bin/bash
 # capatimelapse INSTALL.sh
+#
 # For use on raspbian with raspberry pi camera
 # Version 0.0.9 SlumberMachine 6/12/2017
-# TODO system items & database needs to be added
 # TODO Pipoint options and setup
+
 echo "This is the capatimelapse installer"
 echo  "----------------------------------"
 if [ "$EUID" -ne 0 ]
@@ -35,22 +36,32 @@ echo '<?php $servername = "localhost"; $username = "monitor"; $password = "23rdq
 mv db.php /var/www/html/
 /etc/init.d/lighttpd force-reload
 
+cp ${SCRIPTPATH}/capa-system/capaSystem.service /lib/systemd/system/
+chmod 644 /lib/systemd/system/capaSystem.service
+
 echo "Granting permissions"
 mysql -u root -p23rdqw -e "CREATE DATABASE images";
+mysql -u root -p23rdqw -e "CREATE DATABASE system";
 mysql -u root -p23rdqw -e "CREATE USER 'monitor'@'localhost' IDENTIFIED BY '23rdqw'";
 mysql -u root -p23rdqw -e "GRANT ALL PRIVILEGES ON images.* TO 'monitor'@'localhost'";
+mysql -u root -p23rdqw -e "GRANT ALL PRIVILEGES ON system.* TO 'monitor'@'localhost'";
 mysql -u root -p23rdqw -e "FLUSH PRIVILEGES";
 mysql -u root -p23rdqw images < ${SCRIPTPATH}/capa-system/images.sql
+mysql -u root -p23rdqw system < ${SCRIPTPATH}/capa-system/cputemps.sql
 
-echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -h now' | sudo EDITOR='tee -a' visudo
-echo 'www-data ALL=(ALL) NOPASSWD:/sbin/reboot' | sudo EDITOR='tee -a' visudo
-echo 'www-data ALL=(ALL) NOPASSWD:/usr/bin/pkill' | sudo EDITOR='tee -a' visudo
+echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -h now' | sudo EDITOR='tee -a' visudo 2>&1
+echo 'www-data ALL=(ALL) NOPASSWD:/sbin/reboot' | sudo EDITOR='tee -a' visudo 2>&1
+echo 'www-data ALL=(ALL) NOPASSWD:/usr/bin/pkill' | sudo EDITOR='tee -a' visudo 2>&1
 
 usermod -a -G video www-data
 usermod -a -G pi www-data
 usermod -a -G gpio www-data
 sed -i "s/^www-data:x.*/www-data:x:33:33:www-data:\/var\/www:\/bin\/bash/g" /etc/passwd
 chown -R www-data:www-data /var/www/html
+
+systemctl daemon-reload
+systemctl enable capaSystem.service
+systemctl start capaSystem.service
 
 echo "Checking camera firmware"
 if grep "start_x=1" /boot/config.txt
