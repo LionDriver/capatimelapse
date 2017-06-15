@@ -2,18 +2,41 @@
 # capatimelapse INSTALL.sh
 #
 # For use on raspbian with raspberry pi camera
-# Version 0.0.9 SlumberMachine 6/12/2017
-# TODO Pipoint options and setup
+# Version 0.0.9 - 6/12/2017
 
-echo "This is the capatimelapse installer"
+# MIT License
+# Copyright (c) 2017 SlumberMachine
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+clear
+echo "This is the CapaTimelapse Installer"
 echo  "----------------------------------"
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root or using sudo"
+if [ "$EUID" -ne 0 ]; then 
+  echo "Please run using sudo"
   exit
 fi
 
 SCRIPT=$(readlink -f $0)
 SCRIPTPATH=`dirname $SCRIPT`
+
+if [ "$SCRIPTPATH" != "/home/pi/capatimelapse" ]; then
+  echo "Important: Please clone to /home/pi/ and run this installer from it's cloned location";
+  exit
+fi
 
 echo "Running updates and installing Dependencies"
 apt-get update && sudo apt-get -y dist-upgrade;
@@ -49,9 +72,9 @@ mysql -u root -p23rdqw -e "FLUSH PRIVILEGES";
 mysql -u root -p23rdqw images < ${SCRIPTPATH}/capa-system/images.sql
 mysql -u root -p23rdqw system < ${SCRIPTPATH}/capa-system/cputemps.sql
 
-echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -h now' | sudo EDITOR='tee -a' visudo 2>&1
-echo 'www-data ALL=(ALL) NOPASSWD:/sbin/reboot' | sudo EDITOR='tee -a' visudo 2>&1
-echo 'www-data ALL=(ALL) NOPASSWD:/usr/bin/pkill' | sudo EDITOR='tee -a' visudo 2>&1
+echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -h now' | sudo EDITOR='tee -a' visudo
+echo 'www-data ALL=(ALL) NOPASSWD:/sbin/reboot' | sudo EDITOR='tee -a' visudo
+echo 'www-data ALL=(ALL) NOPASSWD:/usr/bin/pkill' | sudo EDITOR='tee -a' visudo
 
 usermod -a -G video www-data
 usermod -a -G pi www-data

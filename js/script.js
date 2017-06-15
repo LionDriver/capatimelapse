@@ -42,9 +42,9 @@ document.onkeydown = function (e) {
     }
 };
 
-imagereload = setInterval("viewPort()", 60000); //60000
+imagereload = setInterval("viewPort()", 30000); //60000
 var interval = setInterval("loadBatt()", 20000);
-var cputemp = setInterval("loadCpuTemp()", 20000);
+var cputemp = setInterval("loadCpuTemp()", 10000);
 var picinfo = setInterval("getPicInfo()", 2000);
 var timerID = null;
 var timerRunning = false;
@@ -340,7 +340,8 @@ function setcur() {
   setTimeout(function() {
     viewPort();
     $("body").removeClass('wait');
-  }, 2000);
+     document.getElementById("viewport").focus();
+  }, 1000);
 }
 
 //take picture or timelapse
@@ -353,5 +354,5 @@ function sys_snap() {
   setTimeout(function (){
     getPicInfo();
     setcur();
-  }, 3000);
+  }, 4000);
 }
