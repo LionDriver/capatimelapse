@@ -73,7 +73,7 @@ mysql -u root -p23rdqw images < ${SCRIPTPATH}/capa-system/images.sql
 mysql -u root -p23rdqw system < ${SCRIPTPATH}/capa-system/cputemps.sql
 
 echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -h now' | sudo EDITOR='tee -a' visudo
-echo 'www-data ALL=(ALL) NOPASSWD:/sbin/reboot' | sudo EDITOR='tee -a' visudo
+echo 'www-data ALL=(ALL) NOPASSWD:/sbin/shutdown -r now' | sudo EDITOR='tee -a' visudo
 echo 'www-data ALL=(ALL) NOPASSWD:/usr/bin/pkill' | sudo EDITOR='tee -a' visudo
 
 usermod -a -G video www-data
