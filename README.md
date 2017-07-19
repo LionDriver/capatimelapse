@@ -1,5 +1,7 @@
 # Capatimelapse
 The Capa Timelapse system for Raspberry pi.  Named after the famous WW2 photographer. 
+![alt text](https://github.com/slumbermachine/capatimelapse/blob/master/images/sampleMain.png)
+
 
 ## About
 Easy to use web-interface for easy timelapse setup and camera control, including photo gallery and all pi camera settings, and effects.  Great for finding the best settings for your shot.  Intended to be used remote as a captive portal access point which can be controlled by your phone, computer, or tablet.
