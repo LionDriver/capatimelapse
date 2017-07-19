@@ -354,5 +354,5 @@ function sys_snap() {
   setTimeout(function (){
     getPicInfo();
     setcur();
-  }, 4000);
+  }, 3500);
 }
