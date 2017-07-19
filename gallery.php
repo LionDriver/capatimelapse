@@ -182,7 +182,7 @@ mysqli_close($conn);
 
         </div>
     </div>
-    <script src="./js/smartphoto.js?v=1"></script>
+    <script src="./js/smartphoto.min.js?v=1"></script>
     <script>
     document.addEventListener('DOMContentLoaded',function(){
         new smartPhoto(".js-img-viwer");
