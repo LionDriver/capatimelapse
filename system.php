@@ -77,22 +77,6 @@ $conn->close();
   <div id="curve_chart" style="width: 1200px; height: 600px"></div>
   <br>
   <div class="container">
-  <footer class="footer-bottom">
-    <div class="container">
-      <div class="col-xs-5 col-md-5">
-        <p class="text-left">
-      Battery level: <label class="battery" id="battery"></label>&emsp;&emsp;CPU Temperature: <label class="cputemp" id="cputemp"></label>
-      </p>
-    </div>
-    <div class="col-xs-3 col-md-3">
-    </div>
-    <div class="col-xs-4 col-md-4">
-      <p class="text-right text-muted">
-      <span class="glyphicon glyphicon-wrench"></span>  
-      Osteen Industries 2017&#8482</p>
-    </div>
-    </div>
-  </footer>
   </div>
   <script src="js/jquery-3.2.1.slim.min.js"></script>
   <script src="js/bootstrap.min.js"></script>

@@ -23,18 +23,33 @@ $dew = $value['dew'];
 $alt = $value['alt'];
 $timepoint = $value['timepoint'];
 $hostname = $value['hname'];
+$sensor1 = "sensor1";
+$sensor2 = "sensor2";
 
-$result = $conn->query("(SELECT * FROM sensdat ORDER BY sensId DESC LIMIT 144) ORDER BY sensId ASC");
-    
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
+$result1 = $conn->query('(SELECT * FROM sensdat WHERE hname="'.$sensor1.'" ORDER BY sensID DESC LIMIT 144) ORDER BY sensId ASC');
+   
+if ($result1->num_rows > 0) {
+    while($row = $result1->fetch_assoc()) {
         $clean = substr($row['timepoint'], 11, -3);
-        $timearray[] = $clean;
-        $temparray[] = $row['temp'];
+        $timearray1[] = $clean;
+        $temparray1[] = $row['temp'];
     }
 } else {
     echo "Problem in sql query";
 }
+
+$result2 = $conn->query('(SELECT * FROM sensdat WHERE hname="'.$sensor2.'" ORDER BY sensID DESC LIMIT 144) ORDER BY sensId ASC');
+
+if ($result2->num_rows > 0) {
+    while($row = $result2->fetch_assoc()) {
+        $clean = substr($row['timepoint'], 11, -3);
+        $timearray2[] = $clean;
+        $temparray2[] = $row['temp'];
+    }
+} else {
+    echo "Problem in sql query";
+}
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -65,8 +80,11 @@ $conn->close();
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-      var times = <?php echo json_encode($timearray);?>;
-      var temps = <?php echo json_encode($temparray);?>;
+      google.charts.setOnLoadCallback(drawChart2);
+      var times = <?php echo json_encode($timearray1);?>;
+      var temps = <?php echo json_encode($temparray1);?>;
+      var times2 = <?php echo json_encode($timearray2);?>;
+      var temps2 = <?php echo json_encode($temparray2);?>;
 
       function drawChart() {
         var data = new google.visualization.DataTable();
@@ -77,7 +95,7 @@ $conn->close();
         }
 
         var options = {
-          title: "<?php echo $hostname;?>" + ' Temperature',
+          title: "<?php echo $sensor1;?>" + ' Temperature',
           curveType: 'function',
           width: '1100',
           height: '400',
@@ -87,23 +105,31 @@ $conn->close();
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
         chart.draw(data, options);
       }
+
+      function drawChart2() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Time');
+        data.addColumn('number', 'Temperature');
+        for (var i = 0; i < temps2.length; i++) {
+            data.addRow([times2[i], parseInt(temps2[i])]);
+        }
+
+        var options = {
+          title: "<?php echo $sensor2;?>" + ' Temperature',
+          curveType: 'function',
+          width: '1100',
+          height: '400',
+          legend: 'none',
+          grid: 'true'
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+        chart.draw(data, options);      
+      }
     </script>
-  <div id="curve_chart" style="width: 1200px; height: 600px"></div>
+  <div id="curve_chart" style="width: 1100px; height: 500px"></div>
+  <div id="curve_chart2" style="width: 1100px; height: 500px"></div>
   <br>
   <div class="container">
-  <footer class="footer-bottom">
-    <div class="container">
-    <div class="col-xs-5 col-md-5">
-    </div>
-    <div class="col-xs-3 col-md-3">
-    </div>
-    <div class="col-xs-4 col-md-4">
-      <p class="text-right text-muted">
-      <span class="glyphicon glyphicon-wrench"></span>  
-      Osteen Industries 2017&#8482</p>
-    </div>
-    </div>
-  </footer>
   </div>
   <script src="js/jquery-3.2.1.slim.min.js"></script>
   <script src="js/bootstrap.min.js"></script>

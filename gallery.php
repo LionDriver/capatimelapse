@@ -196,9 +196,6 @@ mysqli_close($conn);
             <div class="col-xs-5 col-md-5"></div>
             <div class="col-xs-3 col-md-3"></div>
             <div class="col-xs-4 col-md-4">
-                <p class="text-right text-muted">
-                <span class="glyphicon glyphicon-wrench"></span>  
-                Osteen Industries 2017&#8482</p>
             </div>
           </div>
     </footer>
