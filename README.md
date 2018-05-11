@@ -2,6 +2,7 @@
 The Capa Timelapse system for Raspberry pi.  Named after the famous WW2 photographer. 
 ![alt text](https://github.com/slumbermachine/capatimelapse/blob/master/images/sampleMain.png)
 
+## Update - Fixed old packages making the installer fail!
 
 ## About
 Easy to use web-interface for easy timelapse setup and camera control, including photo gallery and all pi camera settings, and effects.  Great for finding the best settings for your shot.  Intended to be used remote as a captive portal access point which can be controlled by your phone, computer, or tablet.
@@ -13,6 +14,7 @@ Start with a clean raspbian installation (lite or regular, we suggest lite as ca
 3. cd capatimelapse
 4. sudo ./INSTALL.sh
 5. IMPORTANT - Reboot after install has completed.
+6. You may also need to press "delete all photos" in order to clear out the demo picture before attempting to take pictures.
 
 ## How to use
 Once your pi has rebooted.  Connect to it by opening your webbrowser and pointing to the pi IP address or hostname.local (using the hostname of your pi). If you are unsure of your pi's IP address you can look for it using "sudo ip addr show"(eth0 if wired, wlan0 if on wifi) or by looking at your router's connected devices screen.

@@ -2,10 +2,10 @@
 # capatimelapse INSTALL.sh
 #
 # For use on raspbian with raspberry pi camera
-# Version 0.0.9 - 6/12/2017
+# Version 0.1.0 - 5/11/2018
 
 # MIT License
-# Copyright (c) 2017 SlumberMachine
+# Copyright (c) 2018 SlumberMachine
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -40,7 +40,7 @@ fi
 
 echo "Running updates and installing Dependencies"
 apt-get update && sudo apt-get -y dist-upgrade;
-apt-get -y install lighttpd php5-common php5-cgi php5 php5-mysql python-picamera python3-picamera python-mysqldb;
+apt-get -y install lighttpd php7.0-cgi php7.0 php-dev php7.0-mysql python-picamera python3-picamera python-mysqldb;
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password 23rdqw'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password 23rdqw'
 apt-get -y install mysql-server
