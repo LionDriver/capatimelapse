@@ -1,6 +1,6 @@
 # Capatimelapse
 The Capa Timelapse system for Raspberry pi.  Named after the famous WW2 photographer. 
-![alt text](https://github.com/slumbermachine/capatimelapse/blob/master/images/sampleMain.png)
+![alt text](https://github.com/LionDriver/capatimelapse/blob/master/images/sampleMain.png)
 
 ## Update - Fixed old packages making the installer fail!
 
@@ -10,7 +10,7 @@ Easy to use web-interface for easy timelapse setup and camera control, including
 ## Installation
 Start with a clean raspbian installation (lite or regular, we suggest lite as capatimelapse utilizes a web-interface).  From the home (/home/pi) run the following to install:
 1. sudo apt-get install git
-2. git clone https://github.com/slumbermachine/capatimelapse.git
+2. git clone https://github.com/LionDriver/capatimelapse.git
 3. cd capatimelapse
 4. sudo ./INSTALL.sh
 5. IMPORTANT - Reboot after install has completed.
