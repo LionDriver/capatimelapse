@@ -5,7 +5,7 @@
 # Version 0.1.0 - 5/11/2018
 
 # MIT License
-# Copyright (c) 2018 SlumberMachine
+# Copyright (c) 2018 LionDriver
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
